@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Typer Webdev Hard</title>
+  
+  <style>
+    body {
+      background-image: url('orca.jpeg');
+      background-repeat: no-repeat;
+      background-size: cover;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      box-sizing: 500px;
+    }
+
+    .word {
+      font-size: 70px;
+      text-align: center;
+    }
+
+    .input {
+      margin-top: 20px;
+      font-size: 30px;
+      padding: 10px;
+      width: 900px;
+    }
+
+    .timer, .score {
+      margin-top: 50px;
+      font-size: 50px;
+    }
+
+    h1 {
+      font-size: 60px;
+    }
+
+    p {
+      font-size: 60px;
+      color:black
+    }
+    button {
+      position: absolute;
+      top: 70%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 40px;
+      padding: 10px 20px;
+      width: 300px;
+      height: 100px;
+    }
+  </style>
+</head>
+<body>
+  <div>
+    
+    
+    <p>Given words:</p>
+    <div class="word" id="word"></div>
+    <input type="text" class="input" id="input">
+    <div class="timer" id="timer">8</div>
+    <div class="score" id="score">Score: 0</div>
+    <button onclick="startGame()">Start Game</button>
+  </div>
+
+  <script>
+    var words = ["Hardware", "Servicing", "System", "Computer", "Motherboard", "Mobo", "Floppy disk", "Hard-disk-drive", "SATA CABLE", "Process", "sytem unit", "Cpu", "Psu", "Power Supply", "Hdmi", "Power Cord", "High Definition Multimedia Interface", "Video Graphics Array"];
+    var currentWord = "";
+    var timer;
+    var timeLeft = 4;
+    var score = 0;
+
+    function pickRandomWord() {
+      clearInterval(timer);
+      var randomIndex = Math.floor(Math.random() * words.length);
+      currentWord = words[randomIndex];
+      document.getElementById("word").textContent = currentWord;
+      timeLeft = 4;
+      document.getElementById("timer").textContent = timeLeft;
+      timer = setInterval(countdown, 1000);
+    }
+
+    function countdown() {
+      timeLeft--;
+      document.getElementById("timer").textContent = timeLeft;
+      if (timeLeft <= 0) {
+        alert("Time's up!");
+        pickRandomWord();
+      }
+    }
+
+    function startGame() {
+      score = 0;
+      document.getElementById("score").textContent = "Score: " + score;
+      pickRandomWord();
+    }
+
+    document.getElementById("input").addEventListener("input", function(event) {
+      if (event.target.value === currentWord) {
+        event.target.value = "";
+        score++;
+        document.getElementById("score").textContent = "Score: " + score;
+        pickRandomWord();
+      }
+    });
+  </script>
+</body>
+</html>
